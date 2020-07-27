@@ -4,6 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default {
-  MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/test',
+  MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/imperium-register',
   APPLICATION_NAME: process.env.APPLICATION_NAME,
 }

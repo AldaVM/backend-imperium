@@ -1,13 +1,21 @@
 import { Document, Model, Schema } from "mongoose";
 
-class BaseRepository {
+interface IBaseRepository {
+  findById(id: string): Promise<any>;
+  find(pageSize: number, pageNum: number): Promise<any>;
+  create(entity: object): Promise<any>;
+  update(id: string, entity: object): Promise<any>;
+  delete(id: string): Promise<any>;
+}
+
+class BaseRepository implements IBaseRepository {
   private _model: Model<Document>;
 
   constructor(schemaModel: Model<Document>) {
     this._model = schemaModel;
   }
 
-  async findById(id: Schema.Types.ObjectId) {
+  async findById(id: string) {
     return await this._model.findById(id);
   }
 
@@ -27,11 +35,13 @@ class BaseRepository {
     return await registry.save();
   }
 
-  async update(id: Schema.Types.ObjectId, entity: object) {
+  async update(id: string, entity: object) {
     return await this._model.findByIdAndUpdate(id, entity, { new: true });
   }
 
-  async delete(id: Schema.Types.ObjectId) {
+  async delete(id: string) {
     return await this._model.findByIdAndDelete(id);
   }
 }
+
+export { IBaseRepository, BaseRepository };
