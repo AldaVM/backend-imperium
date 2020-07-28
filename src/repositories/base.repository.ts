@@ -13,6 +13,11 @@ class BaseRepository implements IBaseRepository {
 
   constructor(schemaModel: Model<Document>) {
     this._model = schemaModel;
+    this.findById = this.findById.bind(this);
+    this.find = this.find.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async findById(id: string) {

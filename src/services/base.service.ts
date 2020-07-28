@@ -15,6 +15,11 @@ class BaseService implements IBaseService {
 
   constructor(repository: IBaseRepository) {
     this._repository = repository;
+    this.findById = this.findById.bind(this);
+    this.find = this.find.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async findById(id: string) {

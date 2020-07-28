@@ -6,6 +6,11 @@ class BaseController {
 
   constructor(service: IBaseService) {
     this._service = service;
+    this.findById = this.findById.bind(this);
+    this.find = this.find.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async findById(req: Request, res: Response) {

@@ -4,7 +4,7 @@ interface IError extends Error {
   status?: number;
 }
 
-function ErrorGeneric(
+function errorGeneric(
   err: IError,
   req: Request,
   res: Response,
@@ -16,4 +16,4 @@ function ErrorGeneric(
   });
 }
 
-export { ErrorGeneric, IError};
+export { errorGeneric, IError};

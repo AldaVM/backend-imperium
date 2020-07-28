@@ -1,5 +1,5 @@
-import HandleCatchPromise from "./catch-promise.middleware";
-import { ErrorGeneric } from "./error.middleware";
-import RouteNoFound from "./not-found.middleware";
+import handleCatchPromise from "./catch-promise.middleware";
+import { errorGeneric } from "./error.middleware";
+import routeNoFound from "./not-found.middleware";
 
-export { HandleCatchPromise, ErrorGeneric, RouteNoFound };
+export { handleCatchPromise, errorGeneric, routeNoFound };

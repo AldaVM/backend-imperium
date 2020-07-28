@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import routes from "../routes";
+import { errorGeneric, routeNoFound } from "../middlewares";
 const app = express();
 
 //Settings:
@@ -16,10 +18,10 @@ if (process.env.NODE_ENV != "production") {
 }
 
 //Routes
-
+app.use("/v1/api", routes);
 
 //Middleware
-
-
+app.use(routeNoFound);
+app.use(errorGeneric);
 
 export default app;
