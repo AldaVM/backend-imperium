@@ -6,4 +6,6 @@ class HelpService {
   }
 }
 
-export { HelpService };
+const helpService = new HelpService();
+
+export { helpService };

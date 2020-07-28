@@ -1,8 +1,9 @@
-import { Router} from "express"
-import {HelpRouter} from "./index.route"
+import { Router } from "express";
+import { HelpRouter, CustomerRouter } from "./index.route";
 
-const router = Router()
+const router = Router();
 
-router.use("/help", HelpRouter)
+router.use("/help", HelpRouter);
+router.use("/customer", CustomerRouter);
 
-export default router
+export default router;

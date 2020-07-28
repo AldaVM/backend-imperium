@@ -1,5 +1,4 @@
-import { HelpService } from "./help.service";
+import { helpService } from "./help.service";
+import { customerService } from "./customer.service";
 
-const helpService = new HelpService();
-
-export { helpService };
+export { helpService, customerService };

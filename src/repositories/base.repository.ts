@@ -1,4 +1,4 @@
-import { Document, Model, Schema } from "mongoose";
+import { Document, Model } from "mongoose";
 
 interface IBaseRepository {
   findById(id: string): Promise<any>;

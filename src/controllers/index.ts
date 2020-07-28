@@ -1,5 +1,4 @@
-import HelpController from "./help.controller"
+import HelpController from "./help.controller";
+import { customerController } from "./customer.controller";
 
-export {
-  HelpController
-}
+export { HelpController, customerController };

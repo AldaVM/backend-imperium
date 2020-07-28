@@ -36,4 +36,4 @@ const voucherSchema = new Schema({
 });
 
 voucherSchema.plugin(require("mongoose-autopopulate"));
-export default model<IVoucher>("timetable", voucherSchema);
+export default model<IVoucher>("voucher", voucherSchema);
