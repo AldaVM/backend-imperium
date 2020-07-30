@@ -1,7 +1,11 @@
-import { BaseRepository } from "./base.repository";
+import { BaseRepository, IBaseRepository } from "./base.repository";
 import { Model } from "mongoose";
 import { ICustomer } from "../models/customer.model";
 import { CustomerModel } from "../models";
+
+interface ICustomerRepository extends IBaseRepository {
+  findByGender(gender: string): Promise<any>;
+}
 
 class CustomerRepository extends BaseRepository {
   private _customerModel: Model<ICustomer>;
@@ -10,6 +14,7 @@ class CustomerRepository extends BaseRepository {
     super(customerModel);
     this._customerModel = customerModel;
     this.create = this.create.bind(this);
+    this.findByGender = this.findByGender.bind(this);
   }
 
   async create(entity: object) {
@@ -18,8 +23,16 @@ class CustomerRepository extends BaseRepository {
 
     return await customer.save();
   }
+
+  async findByGender(gender: string) {
+    const customers = await this._customerModel.find({ gender }).exec();
+
+    return customers;
+  }
 }
 
-const customerRepository = new CustomerRepository(CustomerModel);
+const customerRepository: ICustomerRepository = new CustomerRepository(
+  CustomerModel
+);
 
-export { customerRepository, CustomerRepository };
+export { customerRepository, CustomerRepository, ICustomerRepository };

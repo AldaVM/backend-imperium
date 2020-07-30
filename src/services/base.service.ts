@@ -1,4 +1,3 @@
-import { Schema } from "mongoose";
 import { IBaseRepository } from "../repositories/base.repository";
 import { verifyEntity } from "../helpers/verify-entity.helper";
 
@@ -27,7 +26,10 @@ class BaseService implements IBaseService {
 
     const currentEntry = await this._repository.findById(id);
 
-    verifyEntity(id, { status: 404, message: "Registry is not found" });
+    verifyEntity(currentEntry, {
+      status: 404,
+      message: "Registry is not found",
+    });
 
     return currentEntry;
   }
