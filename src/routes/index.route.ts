@@ -1,4 +1,6 @@
 import HelpRouter from "./help.route";
 import CustomerRouter from "./customer.route";
+import UserRouter from './user.route';
+import AuthRouter from './auth.route';
 
-export { HelpRouter, CustomerRouter };
+export { HelpRouter, CustomerRouter,UserRouter,AuthRouter };

@@ -2,13 +2,14 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import routes from "../routes";
+
 import { errorGeneric, routeNoFound } from "../middlewares";
 const app = express();
 
 //Settings:
 app.set("port", process.env.PORT || 8000);
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 
 //Settings entorn development:

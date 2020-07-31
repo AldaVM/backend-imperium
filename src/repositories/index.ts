@@ -1,3 +1,4 @@
 import { customerRepository } from "./customer.repository";
+import { userRepository } from "./user.repository";
 
-export { customerRepository };
+export { customerRepository,userRepository };
