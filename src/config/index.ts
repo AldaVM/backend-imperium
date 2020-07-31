@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const config = {
-  MONGO_URI: process.env.MONGO_URI,
+  MONGO_URI: process.env.MONGO_URI || "mongodb://localhost/imperium-register",
   APPLICATION_NAME: process.env.APPLICATION_NAME,
 }
 
