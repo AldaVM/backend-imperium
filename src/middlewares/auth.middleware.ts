@@ -15,7 +15,6 @@ const authMidlleware=async (req:Request,res:Response,next:NextFunction)=>{
             error.message="Token false"
             throw error;
         }
-        console.log(decoded.user);
         (<any>req).user=decoded.user;
          next();
     });
