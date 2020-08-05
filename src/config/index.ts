@@ -2,10 +2,18 @@ if (process.env.NODE_ENV !== "production") {
   const dotenv = require("dotenv");
   dotenv.config();
 }
-
-const config = {
-  MONGO_URI: process.env.MONGO_URI || "mongodb://localhost/imperium-register",
-  APPLICATION_NAME: process.env.APPLICATION_NAME,
+interface Config{
+  MONGO_URI:string;
+  APPLICATION_NAME:string;
+  JWT_SECRET:string;
+  EXPIRES_IN:string
 }
 
-export default config
+const config:Config = {
+  MONGO_URI: String(process.env.MONGO_URI),
+  APPLICATION_NAME: String(process.env.APPLICATION_NAME),
+  JWT_SECRET:String(process.env.JWT_SECRET),
+  EXPIRES_IN:String(process.env.EXPIRES_IN)
+}
+
+export default config;
