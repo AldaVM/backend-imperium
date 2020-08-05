@@ -12,7 +12,7 @@ function verifyEntity(entity: any, config: IConfigError) {
     const err: IError = new Error();
     err.status = status;
     err.message = message;
-    throw err;
+    return err;
   }
 }
 

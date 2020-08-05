@@ -3,6 +3,7 @@ import { Document, Model } from "mongoose";
 interface IBaseRepository {
   findById(id: string): Promise<any>;
   find(pageSize: number, pageNum: number): Promise<any>;
+  findByItems(items: object): Promise<any>;
   create(entity: object): Promise<any>;
   update(id: string, entity: object): Promise<any>;
   delete(id: string): Promise<any>;
@@ -15,6 +16,7 @@ class BaseRepository implements IBaseRepository {
     this._model = schemaModel;
     this.findById = this.findById.bind(this);
     this.find = this.find.bind(this);
+    this.findByItems = this.findByItems.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
@@ -33,6 +35,12 @@ class BaseRepository implements IBaseRepository {
       records,
       count,
     };
+  }
+
+  async findByItems(items: object) {
+    const records = await this._model.find({ ...items }).exec();
+
+    return records;
   }
 
   async create(entity: object) {

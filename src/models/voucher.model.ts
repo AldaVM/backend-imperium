@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 
 export interface IVoucher extends Document {
   paid: Schema.Types.ObjectId;
-  customers: Schema.Types.ObjectId;
+  customer: Schema.Types.ObjectId;
   date_init: Date;
   date_expiration: Date;
   total: number;
