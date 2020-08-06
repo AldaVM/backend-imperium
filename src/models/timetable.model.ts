@@ -5,7 +5,8 @@ export interface ITimetable extends Document {
   intermediate_days: string;
   vacancies: number;
   hour: string;
-  customers?: [Schema.Types.ObjectId];
+  customers?: [object];
+  customerLength: number;
 }
 
 const timetableSchema = new Schema({
@@ -32,6 +33,10 @@ const timetableSchema = new Schema({
       autopopulate: true,
     },
   ],
+  customerLength: {
+    type: Number,
+    default: 0
+  }
 });
 
 timetableSchema.plugin(require("mongoose-autopopulate"));

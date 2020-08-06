@@ -25,7 +25,7 @@ class BaseController {
   async find(req: Request, res: Response) {
     const { pageSize, pageNum } = req.query;
 
-    let size = pageSize ? +pageSize : 5,
+    let size = pageSize ? +pageSize : 10,
       page = pageNum ? +pageNum : 1;
 
     const records = await this._service.find(size, page);
