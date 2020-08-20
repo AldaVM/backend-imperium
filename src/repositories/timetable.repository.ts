@@ -14,7 +14,7 @@ class TimetableRepository extends BaseRepository {
 
   async findShiftsAvailable(items: object): Promise<any> {
 
-    const records = await this._timetable.find({ customerLength: { $gte: 0, $lte: 3 }, ...items }).exec();
+    const records = await this._timetable.find({ customerLength: { $gte: 0, $lte: 3  }, ...items }).exec();
 
     return records;
   }

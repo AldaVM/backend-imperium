@@ -26,12 +26,12 @@ const voucherSchema = new Schema({
     required: [true, "class_shift is required"],
   },
   date_expiration: {
-    type: Number,
+    type: Date,
     required: [true, "vacancies is required"],
   },
   total: {
     type: String,
-    required: [true, "hour is required"],
+    required: [true, "total is required"],
   },
 });
 

@@ -66,12 +66,21 @@ class BaseService implements IBaseService {
     try {
       const records = await this._repository.findByItems({ ...items });
 
-      return {
+      return records.length > 0 ? {
         ok: true,
         status: 200,
         message: "List record",
         data: records,
-      };
+      } : {
+          ok: false,
+          status: 404,
+          message: "Datos no encontrados",
+          data: records,
+        }
+
+
+
+
     } catch (error) {
       return {
         ok: false,

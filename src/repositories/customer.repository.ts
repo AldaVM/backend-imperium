@@ -3,12 +3,6 @@ import { Model } from "mongoose";
 import { ICustomer } from "../models/customer.model";
 import { CustomerModel } from "../models";
 
-/*
-Si hay métodos propios
-interface ICustomerRepository extends IBaseRepository {
-  findByGender(gender: string): Promise<any>;
-}
-*/
 
 class CustomerRepository extends BaseRepository {
   private _customerModel: Model<ICustomer>;
