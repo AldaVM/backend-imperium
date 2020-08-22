@@ -19,6 +19,7 @@ class CustomerRepository extends BaseRepository {
 
     return await customer.save();
   }
+
 }
 
 const customerRepository = new CustomerRepository(CustomerModel);

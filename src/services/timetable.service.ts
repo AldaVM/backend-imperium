@@ -46,7 +46,7 @@ class TimetableService extends BaseService {
         return {
           ok: true,
           status: 200,
-          message: "En estos momentos no hay turnos disponibles",
+          message: "No tenemos turnos disponibles en el horario seleccionado 😓",
         }
       };
 

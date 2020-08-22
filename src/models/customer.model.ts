@@ -6,13 +6,14 @@ export interface ICustomer extends Document {
   dni: string;
   create_at: number;
   phone_number?: string;
-  age?: number;
+  birthday?: string;
   gender?: string;
   address?: string;
   email?: string;
   optional_number?: string;
   reference?: string;
   image?: string;
+  timetable?: object
 }
 
 const customerSchema = new Schema({
@@ -37,8 +38,8 @@ const customerSchema = new Schema({
     type: Number,
     required: [true, "create_at is required"],
   },
-  age: {
-    type: Number,
+  birthday: {
+    type: String,
   },
   gender: {
     type: String,
@@ -58,6 +59,10 @@ const customerSchema = new Schema({
     type: String,
   },
   image: String,
+  timetable: {
+    type: Schema.Types.ObjectId,
+    ref: "timetable"
+  }
 });
 
 export default model<ICustomer>("customer", customerSchema);
