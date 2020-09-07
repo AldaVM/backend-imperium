@@ -19,7 +19,6 @@ class TimetableRepository extends BaseRepository {
     return records;
   }
 
-
 }
 
 const timetableRepository = new TimetableRepository(TimetableModel);

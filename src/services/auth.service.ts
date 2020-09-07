@@ -1,5 +1,6 @@
 import { generateToken } from "../helpers";
 import { IUserServices, userService } from "./user.service";
+import { IError } from "../middlewares/error.middleware";
 
 class AuthServices {
   private _userService: IUserServices;
@@ -12,14 +13,16 @@ class AuthServices {
     const { email, password } = user;
     const userFind = await this._userService.getUserByUserEmail(email);
     if (!userFind) {
-      const error = new Error();
+      const error:IError = new Error();
       error.message = 'Not found* user';
+      error.status = 401;
       throw error;
     }
 
     if (!userFind.comparePasswords(password)) {
-      const error = new Error();
+      const error:IError = new Error();
       error.message = 'Not found user*';
+      error.status = 401;
       throw error;
     }
     const userToEncode = {
@@ -42,8 +45,9 @@ class AuthServices {
     const { email } = user;
     const userFind = await this._userService.getUserByUserEmail(email);
     if (userFind) {
-      const error = new Error();
+      const error:IError = new Error();
       error.message = "User exists";
+      error.status = 404
       throw error;
     }
 

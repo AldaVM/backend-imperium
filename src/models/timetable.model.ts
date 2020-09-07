@@ -30,13 +30,16 @@ const timetableSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "customer",
-      autopopulate: true,
+      autopopulate: {
+        select: ["names", "surnames", "dni", "gender"],
+        maxDepth: 1,
+      },
     },
   ],
   customerLength: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
 timetableSchema.plugin(require("mongoose-autopopulate"));

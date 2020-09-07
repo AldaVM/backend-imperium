@@ -13,7 +13,7 @@ export interface ICustomer extends Document {
   optional_number?: string;
   reference?: string;
   image?: string;
-  timetable?: object
+  timetable?: object;
 }
 
 const customerSchema = new Schema({
@@ -61,8 +61,10 @@ const customerSchema = new Schema({
   image: String,
   timetable: {
     type: Schema.Types.ObjectId,
-    ref: "timetable"
-  }
+    ref: "timetable",
+    autopopulate: { select: ["hour", "class_shift", "intermediate_days"], maxDepth: 1 },
+  },
 });
 
+customerSchema.plugin(require("mongoose-autopopulate"));
 export default model<ICustomer>("customer", customerSchema);

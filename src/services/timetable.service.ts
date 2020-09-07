@@ -1,16 +1,43 @@
 import { BaseService } from "./base.service";
-import { timetableRepository } from "../repositories";
+import { timetableRepository, customerRepository } from "../repositories";
 import { TimetableRepository } from "repositories/timetable.repository";
 
 class TimetableService extends BaseService {
-
-  private _timetableRepository: TimetableRepository
+  private _timetableRepository: TimetableRepository;
 
   constructor(timetableRepository: any) {
     super(timetableRepository);
-    this._timetableRepository = timetableRepository
+    this._timetableRepository = timetableRepository;
     this.addCustomer = this.addCustomer.bind(this);
     this.findShiftsAvailable = this.findShiftsAvailable.bind(this);
+    this.deleteCustomer = this.deleteCustomer.bind(this);
+  }
+
+  async deleteCustomer(id: string, idCustomer: string) {
+    try {
+      const timetable: any = await this._timetableRepository.findById(id);
+      const customers = timetable.customers.filter(
+        (customer: any) => customer._id != idCustomer
+      );
+      const updatedTimetabled = await this._timetableRepository.update(id, {
+        customers,
+        customerLength: customers.length,
+      });
+
+      return {
+        ok: true,
+        status: 200,
+        message: "List record",
+        data: updatedTimetabled,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
+    }
   }
 
   async addCustomer(id: string, idCustomer: object) {
@@ -20,7 +47,10 @@ class TimetableService extends BaseService {
       timetable.customers.push(idCustomer);
       timetable.customerLength = timetable.customers.length;
 
-      const currentTimetable = await this._timetableRepository.update(id, timetable)
+      const currentTimetable = await this._timetableRepository.update(
+        id,
+        timetable
+      );
 
       return {
         ok: true,
@@ -40,15 +70,18 @@ class TimetableService extends BaseService {
 
   async findShiftsAvailable(items: object) {
     try {
-      const timetable: any = await this._timetableRepository.findShiftsAvailable(items);
+      const timetable: any = await this._timetableRepository.findShiftsAvailable(
+        items
+      );
 
       if (timetable.length == 0) {
         return {
           ok: true,
           status: 200,
-          message: "No tenemos turnos disponibles en el horario seleccionado 😓",
-        }
-      };
+          message:
+            "No tenemos turnos disponibles en el horario seleccionado 😓",
+        };
+      }
 
       return {
         ok: true,
