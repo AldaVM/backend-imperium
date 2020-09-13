@@ -49,7 +49,7 @@ class BaseService implements IBaseService {
       return {
         ok: true,
         status: 200,
-        message: "List record",
+        message: "List records",
         data: records,
       };
     } catch (error) {
@@ -95,7 +95,7 @@ class BaseService implements IBaseService {
 
       return {
         ok: true,
-        status: 200,
+        status: 201,
         message: "Insert new record",
         data: newRecord,
       };

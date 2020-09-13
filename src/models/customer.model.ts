@@ -62,7 +62,13 @@ const customerSchema = new Schema({
   timetable: {
     type: Schema.Types.ObjectId,
     ref: "timetable",
-    autopopulate: { select: ["hour", "class_shift", "intermediate_days"], maxDepth: 1 },
+    autopopulate: {
+      select: ["hour", "class_shift", "intermediate_days"],
+      maxDepth: 1,
+    },
+  },
+  date_timetable: {
+    type: Date,
   },
 });
 

@@ -3,7 +3,6 @@ import { Model } from "mongoose";
 import { ICustomer } from "../models/customer.model";
 import { CustomerModel } from "../models";
 
-
 class CustomerRepository extends BaseRepository {
   private _customerModel: Model<ICustomer>;
 
@@ -11,6 +10,7 @@ class CustomerRepository extends BaseRepository {
     super(customerModel);
     this._customerModel = customerModel;
     this.create = this.create.bind(this);
+    this.deleteTimetable = this.deleteTimetable.bind(this);
   }
 
   async create(entity: object) {
@@ -20,6 +20,12 @@ class CustomerRepository extends BaseRepository {
     return await customer.save();
   }
 
+  async deleteTimetable(id: string) {
+    const customer = await this._customerModel.findByIdAndUpdate(id, {
+      $unset: { timetable: 1, date_timetable: 1 },
+    });
+    return customer;
+  }
 }
 
 const customerRepository = new CustomerRepository(CustomerModel);

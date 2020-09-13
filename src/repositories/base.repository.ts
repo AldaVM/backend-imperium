@@ -1,4 +1,4 @@
-import { Document, Model } from "mongoose";
+import { Model } from "mongoose";
 
 interface IBaseRepository {
   findById(id: string): Promise<any>;
@@ -10,9 +10,9 @@ interface IBaseRepository {
 }
 
 class BaseRepository implements IBaseRepository {
-  private _model: Model<Document>;
+  private _model: Model<any>;
 
-  constructor(schemaModel: Model<Document>) {
+  constructor(schemaModel: Model<any>) {
     this._model = schemaModel;
     this.findById = this.findById.bind(this);
     this.find = this.find.bind(this);
