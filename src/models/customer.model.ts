@@ -69,6 +69,7 @@ const customerSchema = new Schema({
   },
   date_timetable: {
     type: Date,
+    default: 0,
   },
 });
 
