@@ -5,6 +5,10 @@ import { Router } from "express";
 const router = Router();
 
 router.get("", handleCatchPromise(customerController.find));
+router.get(
+  "/download_xlsx",
+  handleCatchPromise(customerController.downloadExcel)
+);
 router.get("/:id", handleCatchPromise(customerController.findById));
 router.get(
   "/find_by_dni/:dni",
