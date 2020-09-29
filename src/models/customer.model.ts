@@ -14,6 +14,7 @@ export interface ICustomer extends Document {
   reference?: string;
   image?: string;
   timetable?: object;
+  type_timetable?: string;
 }
 
 const customerSchema = new Schema({
@@ -21,6 +22,7 @@ const customerSchema = new Schema({
     type: String,
     required: [true, "name is required"],
   },
+
   surnames: {
     type: String,
     required: [true, "surnames is required"],
@@ -70,6 +72,9 @@ const customerSchema = new Schema({
   date_timetable: {
     type: Number,
     default: 0,
+  },
+  type_timetable: {
+    type: String,
   },
 });
 

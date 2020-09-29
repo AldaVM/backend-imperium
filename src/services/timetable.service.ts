@@ -1,5 +1,5 @@
 import { BaseService } from "./base.service";
-import { timetableRepository, customerRepository } from "../repositories";
+import { timetableRepository } from "../repositories";
 import { TimetableRepository } from "repositories/timetable.repository";
 
 class TimetableService extends BaseService {
@@ -11,6 +11,8 @@ class TimetableService extends BaseService {
     this.addCustomer = this.addCustomer.bind(this);
     this.findShiftsAvailable = this.findShiftsAvailable.bind(this);
     this.deleteCustomer = this.deleteCustomer.bind(this);
+    this.getTimetableAllDays = this.getTimetableAllDays.bind(this);
+    this.addCustomerInDiaryTurn = this.addCustomerInDiaryTurn.bind(this);
   }
 
   async deleteCustomer(id: string, idCustomer: string) {
@@ -29,6 +31,91 @@ class TimetableService extends BaseService {
         status: 200,
         message: "List record",
         data: updatedTimetabled,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
+    }
+  }
+
+  async addCustomerInDiaryTurn(hour: string, idCustomer: object) {
+    try {
+      const timetables = await this._timetableRepository.findByItems({
+        hour,
+      });
+
+      const customersRegister = timetables.map((item) =>
+        this.addCustomer(item._id, idCustomer)
+      );
+
+      const timetablesUpdated = await Promise.all(customersRegister);
+
+      return {
+        ok: true,
+        status: 200,
+        message: "List record",
+        data: timetablesUpdated,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
+    }
+  }
+
+  async getTimetableAllDays(class_shift: string) {
+    try {
+      const timetables: any = await this._timetableRepository.findByItems({
+        class_shift,
+        customerLength: { $gte: 0, $lte: 3 },
+      });
+
+      const timetablesRepeated = timetables.reduce(
+        (acu: any, timetable: any) => {
+          acu[timetable.hour] = {
+            count: (acu[timetable.hour] ? 1 : 0 || 0) + 1,
+            class_shift: timetable.class_shift,
+          };
+          return acu;
+        },
+        {}
+      );
+
+      const availableTimetables = Object.entries(timetablesRepeated).reduce(
+        (acu: any, item: any) => {
+          if (item[1].count > 1) {
+            acu.push({
+              hour: item[0],
+              ...item[1],
+              days: "Diario",
+            });
+          }
+          return acu;
+        },
+        []
+      );
+
+      if (availableTimetables.length == 0) {
+        return {
+          ok: true,
+          status: 200,
+          message:
+            "No tenemos turnos disponibles en el horario seleccionado 😓",
+        };
+      }
+
+      return {
+        ok: true,
+        status: 200,
+        message: "List record",
+        data: availableTimetables,
       };
     } catch (error) {
       return {
