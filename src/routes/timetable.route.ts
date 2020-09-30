@@ -6,16 +6,17 @@ const router = Router();
 
 router.get("", handleCatchPromise(timetableController.find));
 router.get("/:id", handleCatchPromise(timetableController.findById));
-router.get(
-  "/shift_available/all_days",
-  handleCatchPromise(timetableController.getTimetableAllDays)
-);
-//Cambiar a get, se hizo prubea para enviar datos en body
+router.post("", handleCatchPromise(timetableController.create));
 router.post(
   "/shift_available",
   handleCatchPromise(timetableController.findShiftsAvailable)
 );
-router.post("", handleCatchPromise(timetableController.create));
+router.post(
+  "/shift_available/all_days",
+  handleCatchPromise(timetableController.getTimetableAllDays)
+);
+//Cambiar a get, se hizo prubea para enviar datos en body
+
 router.put("/:id", handleCatchPromise(timetableController.update));
 router.put(
   "/add_customer/all-days",
@@ -25,7 +26,6 @@ router.put(
   "/add_customer/:id",
   handleCatchPromise(timetableController.addCustomer)
 );
-
 
 router.post(
   "/delete_customer/:id",

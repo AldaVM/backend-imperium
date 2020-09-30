@@ -60,7 +60,7 @@ class CustomerServices extends BaseService {
       const [customer] = await this._customerRepository.findByItems(items);
 
       if (customer) {
-        return customer.timetable
+        return customer.timetable.length >= 1
           ? {
               ok: false,
               status: 401,

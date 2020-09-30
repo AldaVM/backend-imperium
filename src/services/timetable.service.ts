@@ -42,14 +42,10 @@ class TimetableService extends BaseService {
     }
   }
 
-  async addCustomerInDiaryTurn(hour: string, idCustomer: object) {
+  async addCustomerInDiaryTurn(idsTurn: [], idCustomer: object) {
     try {
-      const timetables = await this._timetableRepository.findByItems({
-        hour,
-      });
-
-      const customersRegister = timetables.map((item) =>
-        this.addCustomer(item._id, idCustomer)
+      const customersRegister = idsTurn.map((idTurn) =>
+        this.addCustomer(idTurn, idCustomer)
       );
 
       const timetablesUpdated = await Promise.all(customersRegister);
@@ -81,7 +77,12 @@ class TimetableService extends BaseService {
         (acu: any, timetable: any) => {
           acu[timetable.hour] = {
             count: (acu[timetable.hour] ? 1 : 0 || 0) + 1,
+            turns_id: (acu[timetable.hour]
+              ? acu[timetable.hour].turns_id
+              : [] || []
+            ).concat([timetable._id]),
             class_shift: timetable.class_shift,
+            test: "hola",
           };
           return acu;
         },
@@ -92,9 +93,10 @@ class TimetableService extends BaseService {
         (acu: any, item: any) => {
           if (item[1].count > 1) {
             acu.push({
+              _id: item[0],
               hour: item[0],
               ...item[1],
-              days: "Diario",
+              intermediate_days: "Diario",
             });
           }
           return acu;

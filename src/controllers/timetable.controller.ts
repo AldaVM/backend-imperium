@@ -51,7 +51,7 @@ class TimetableController extends BaseController {
     const { body } = req;
 
     const timetables = await this._timetableService.addCustomerInDiaryTurn(
-      body.hour,
+      body.idsTurn,
       body
     );
 

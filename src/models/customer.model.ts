@@ -13,8 +13,9 @@ export interface ICustomer extends Document {
   optional_number?: string;
   reference?: string;
   image?: string;
-  timetable?: object;
+  timetable?: [object];
   type_timetable?: string;
+  type_modality: string;
 }
 
 const customerSchema = new Schema({
@@ -61,19 +62,24 @@ const customerSchema = new Schema({
     type: String,
   },
   image: String,
-  timetable: {
-    type: Schema.Types.ObjectId,
-    ref: "timetable",
-    autopopulate: {
-      select: ["hour", "class_shift", "intermediate_days"],
-      maxDepth: 1,
+  timetable: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "timetable",
+      autopopulate: {
+        select: ["hour", "class_shift", "intermediate_days"],
+        maxDepth: 1,
+      },
     },
-  },
+  ],
   date_timetable: {
     type: Number,
     default: 0,
   },
   type_timetable: {
+    type: String,
+  },
+  type_modality: {
     type: String,
   },
 });
