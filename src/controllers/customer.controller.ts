@@ -42,19 +42,48 @@ class CustomerController extends BaseController {
       "attachment; filename=" + "clients.xlsx"
     );
 
+    const getTimetable = (timetables: any) => {
+      if (timetables.length > 1) {
+        return {
+          is_shift: "sí",
+          class_shift: timetables[0].class_shift,
+          type_turn: "Diario",
+          intermediate_days: "Diario",
+          hour: timetables[0].hour,
+        };
+      } else if (timetables.length === 1) {
+        return {
+          is_shift: "sí",
+          class_shift: timetables[0].class_shift,
+          type_turn: "Interdiario",
+          intermediate_days: timetables[0].intermediate_days,
+          hour: timetables[0].hour,
+        };
+      }
+
+      return {
+        is_shift: "no",
+        class_shift: "-",
+        type_turn: "-",
+        intermediate_days: "-",
+        register_timetable: "-",
+        hour: "-",
+      };
+    };
+
     const data = await this._customerService.find(100, 1);
     const clients = data?.data?.records.reduce(
       (acu: any, currentValue: any) => {
         if (currentValue?.timetable) {
+          console.log(currentValue?.timetable);
           acu.push({
-            created: format(currentValue.create_at, "dd/MM/yyyy"),
+            created: format(currentValue?.create_at, "dd/MM/yyyy"),
+            ...getTimetable(currentValue?.timetable),
             register_timetable: format(
-              currentValue.date_timetable,
+              currentValue?.date_timetable,
               "dd/MM/yyyy"
             ),
             ...currentValue?._doc,
-            is_shift: "sí",
-            ...currentValue?.timetable?._doc,
           });
         } else {
           acu.push({
@@ -85,6 +114,8 @@ class CustomerController extends BaseController {
       { header: "Frecuencia", key: "intermediate_days" },
       { header: "Hora", key: "hour" },
       { header: "Fecha-Registro-Turno", key: "register_timetable" },
+      { header: "Modalidad", key: "type_modality" },
+      { header: "Turno descripción", key: "type_timetable" },
     ];
 
     const workbook = json2xlsx(clients, "clients", columnsClients);
