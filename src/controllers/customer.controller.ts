@@ -14,6 +14,13 @@ class CustomerController extends BaseController {
     this.validateShiftByDNI = this.validateShiftByDNI.bind(this);
     this.deleteTimetable = this.deleteTimetable.bind(this);
     this.downloadExcel = this.downloadExcel.bind(this);
+    this.find = this.find.bind(this);
+  }
+
+  async find(req: Request, res: Response) {
+    const records = await this._customerService.find(150, 1);
+
+    res.status(records.status).json(records);
   }
 
   async validateShiftByDNI(req: Request, res: Response) {
