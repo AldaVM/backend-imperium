@@ -12,13 +12,13 @@ class TimetableRepository extends BaseRepository {
     this.findShiftsAvailable = this.findShiftsAvailable.bind(this);
   }
 
-  async findShiftsAvailable(items: object): Promise<any> {
-
-    const records = await this._timetable.find({ customerLength: { $gte: 0, $lte: 3  }, ...items }).exec();
+  async findShiftsAvailable(items: object, maxVacant: number): Promise<any> {
+    const records = await this._timetable
+      .find({ customerLength: { $gte: 0, $lte: maxVacant }, ...items })
+      .exec();
 
     return records;
   }
-
 }
 
 const timetableRepository = new TimetableRepository(TimetableModel);

@@ -1,6 +1,7 @@
 import { BaseService } from "./base.service";
-import { timetableRepository } from "../repositories";
+import { parameter, timetableRepository } from "../repositories";
 import { TimetableRepository } from "repositories/timetable.repository";
+import { parameterService } from "./parameter.service";
 
 class TimetableService extends BaseService {
   private _timetableRepository: TimetableRepository;
@@ -68,9 +69,12 @@ class TimetableService extends BaseService {
 
   async getTimetableAllDays(class_shift: string) {
     try {
+      const parameter: any = await parameterService.getValueByName("maxVacant");
+      const maxVacant = parameter ? parseInt(parameter) - 1 : 7;
+
       const timetables: any = await this._timetableRepository.findByItems({
         class_shift,
-        customerLength: { $gte: 0, $lte: 3 },
+        customerLength: { $gte: 0, $lte: maxVacant },
       });
 
       const timetablesRepeated = timetables.reduce(
@@ -82,7 +86,7 @@ class TimetableService extends BaseService {
               : [] || []
             ).concat([timetable._id]),
             class_shift: timetable.class_shift,
-            test: "hola",
+            customers: timetable.customers.length,
           };
           return acu;
         },
@@ -159,8 +163,12 @@ class TimetableService extends BaseService {
 
   async findShiftsAvailable(items: object) {
     try {
+      const parameter: any = await parameterService.getValueByName("maxVacant");
+      const maxVacant = parameter ? parseInt(parameter) - 1 : 7;
+
       const timetable: any = await this._timetableRepository.findShiftsAvailable(
-        items
+        items,
+        maxVacant
       );
 
       if (timetable.length == 0) {
@@ -172,11 +180,23 @@ class TimetableService extends BaseService {
         };
       }
 
+      let record = timetable.map((currentValue: any) => {
+        return {
+          _id: currentValue._id,
+          class_shift: currentValue.class_shift,
+          intermediate_days: currentValue.intermediate_days,
+          vacancies: currentValue.vacancies,
+          hour: currentValue.hour,
+          customer: currentValue.customers.length,
+        };
+      });
+
       return {
         ok: true,
         status: 200,
         message: "List record",
-        data: timetable,
+        data: record,
+        size: record.length,
       };
     } catch (error) {
       return {

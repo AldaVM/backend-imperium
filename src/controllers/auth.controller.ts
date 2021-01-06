@@ -1,7 +1,6 @@
 import { authService } from "../services";
-import { AuthServices } from '../services/auth.service';
+import { AuthServices } from "../services/auth.service";
 import { Request, Response } from "express";
-
 
 class AuthController {
   private _authService: AuthServices;
@@ -14,13 +13,8 @@ class AuthController {
   async signin(req: Request, res: Response) {
     const { body } = req;
     const resp = await this._authService.signin(body);
-    return res.status(202).json({
-      code: 202,
-      message: "Login success",
-      data: resp
-    });
+    return res.status(resp.status).json(resp);
   }
-
 
   async signup(req: Request, res: Response) {
     const { body } = req;
@@ -28,15 +22,11 @@ class AuthController {
     return res.status(201).json({
       code: 201,
       message: "User Created",
-      data: createdUser
+      data: createdUser,
     });
   }
-
 }
 
 const authController = new AuthController(authService);
 
-export {
-  authController,
-  AuthController
-}
+export { authController, AuthController };

@@ -10,34 +10,44 @@ class AuthServices {
   }
 
   async signin(user: any) {
-    const { email, password } = user;
-    const userFind = await this._userService.getUserByUserEmail(email);
-    if (!userFind) {
-      const error:IError = new Error();
-      error.message = 'Not found* user';
-      error.status = 401;
-      throw error;
-    }
+    try {
+      const { email, password } = user;
+      const userFind = await this._userService.getUserByUserEmail(email);
 
-    if (!userFind.comparePasswords(password)) {
-      const error:IError = new Error();
-      error.message = 'Not found user*';
-      error.status = 401;
-      throw error;
-    }
-    const userToEncode = {
-      name: userFind.name,
-      _id: userFind._id,
-      email: userFind.email,
-      createdAt: userFind.createdAt,
-      role: userFind.role
-    }
+      if (userFind?.user == null) {
+        return userFind;
+      }
 
-    const token = generateToken(userToEncode);
+      if (!userFind?.user.comparePasswords(password)) {
+        return {
+          ok: false,
+          status: 401,
+          message: "Problema en la autenticación",
+          user: null,
+        };
+      }
 
-    return {
-      user: userFind,
-      token
+      const userToEncode = {
+        name: userFind?.user.name,
+        _id: userFind?.user._id,
+        email: userFind?.user.email,
+        createdAt: userFind?.user.createdAt,
+        role: userFind?.user.role,
+      };
+
+      const token = generateToken(userToEncode);
+
+      return {
+        ...userFind,
+        token,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
     }
   }
   //:(
@@ -45,23 +55,16 @@ class AuthServices {
     const { email } = user;
     const userFind = await this._userService.getUserByUserEmail(email);
     if (userFind) {
-      const error:IError = new Error();
+      const error: IError = new Error();
       error.message = "User exists";
-      error.status = 404
+      error.status = 404;
       throw error;
     }
 
     return await this._userService.create(user);
   }
-
 }
-
 
 const authService = new AuthServices(userService);
 
-export {
-  authService,
-  AuthServices
-}
-
-
+export { authService, AuthServices };
