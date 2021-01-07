@@ -7,6 +7,7 @@ import {
   TimetableRouter,
   RangeHoursRouter,
   ParameterRouter,
+  VoucherRouter,
 } from "./index.route";
 
 const router = Router();
@@ -18,5 +19,5 @@ router.use("/auth", AuthRouter);
 router.use("/user", UserRouter);
 router.use("/timetable", TimetableRouter);
 router.use("/rangehours", RangeHoursRouter);
-
+router.use("/voucher", VoucherRouter);
 export default router;

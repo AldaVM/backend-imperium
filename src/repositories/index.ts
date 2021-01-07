@@ -3,6 +3,7 @@ import { timetableRepository } from "./timetable.repository";
 import { userRepository } from "./user.repository";
 import { rangeHours } from "./rangehour.repository";
 import { parameter } from "./parameter.repositroy";
+import { voucherRepository } from "./voucher.repository";
 
 export {
   customerRepository,
@@ -10,4 +11,5 @@ export {
   timetableRepository,
   rangeHours,
   parameter,
+  voucherRepository,
 };

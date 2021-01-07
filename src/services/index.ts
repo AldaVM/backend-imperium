@@ -5,6 +5,7 @@ import { userService } from "./user.service";
 import { authService } from "./auth.service";
 import { rangeHoursService } from "./rangehour.service";
 import { parameterService } from "./parameter.service";
+import { voucherService } from "./voucher.service";
 
 export {
   helpService,
@@ -14,4 +15,5 @@ export {
   timetableService,
   rangeHoursService,
   parameterService,
+  voucherService,
 };

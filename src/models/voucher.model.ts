@@ -13,24 +13,26 @@ const voucherSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "paid",
     autopopulate: true,
-    required: [true, "paid is required"],
   },
   customer: {
     type: Schema.Types.ObjectId,
     ref: "customer",
-    autopopulate: true,
+    autopopulate: {
+      select: ["dni", "names", "surnames", "email"],
+      maxDepth: 1,
+    },
     required: [true, "customer is required"],
   },
   date_init: {
     type: Date,
-    required: [true, "class_shift is required"],
+    required: [true, "date_init is required"],
   },
   date_expiration: {
     type: Date,
-    required: [true, "vacancies is required"],
+    required: [true, "date_expiration is required"],
   },
   total: {
-    type: String,
+    type: Number,
     required: [true, "total is required"],
   },
 });

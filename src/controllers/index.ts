@@ -5,6 +5,7 @@ import { authController } from "./auth.controller";
 import { timetableController } from "./timetable.controller";
 import { rangeHoursController } from "./rangehour.controller";
 import { parameterController } from "./parameter.controller";
+import { voucherController } from "./voucher.controller";
 export {
   HelpController,
   customerController,
@@ -13,4 +14,5 @@ export {
   timetableController,
   rangeHoursController,
   parameterController,
+  voucherController,
 };

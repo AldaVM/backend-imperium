@@ -72,6 +72,16 @@ const customerSchema = new Schema({
       },
     },
   ],
+  vouchers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "voucher",
+      autopopulate: {
+        select: ["paid", "date_init", "date_expiration", "total"],
+        maxDepth: 1,
+      },
+    },
+  ],
   date_timetable: {
     type: Number,
     default: 0,

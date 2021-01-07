@@ -11,6 +11,34 @@ class CustomerServices extends BaseService {
     this.validateShiftByDNI = this.validateShiftByDNI.bind(this);
     this.deleteCustomer = this.deleteCustomer.bind(this);
     this.deleteTimetable = this.deleteTimetable.bind(this);
+    this.addVoucher = this.addVoucher.bind(this);
+  }
+
+  async addVoucher(idCustomer: string, idVoucher: string) {
+    try {
+      const customer: any = await this._customerRepository.findById(idCustomer);
+
+      customer.vouchers.push(idVoucher);
+
+      const currentCustomer = await this._customerRepository.update(
+        idCustomer,
+        customer
+      );
+
+      return {
+        ok: true,
+        status: 200,
+        message: "Nuevo voucher registrado",
+        data: currentCustomer,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
+    }
   }
 
   async deleteCustomer(id: string) {

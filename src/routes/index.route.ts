@@ -5,6 +5,7 @@ import UserRouter from "./user.route";
 import AuthRouter from "./auth.route";
 import RangeHoursRouter from "./rangrhour.route";
 import ParameterRouter from "./parameter.route";
+import VoucherRouter from "./voucher.route";
 
 export {
   HelpRouter,
@@ -14,4 +15,5 @@ export {
   TimetableRouter,
   RangeHoursRouter,
   ParameterRouter,
+  VoucherRouter,
 };
