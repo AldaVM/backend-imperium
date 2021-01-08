@@ -18,7 +18,7 @@ const voucherSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "customer",
     autopopulate: {
-      select: ["dni", "names", "surnames", "email"],
+      select: ["dni", "names", "surnames", "email", "type_modality"],
       maxDepth: 1,
     },
     required: [true, "customer is required"],
@@ -31,9 +31,27 @@ const voucherSchema = new Schema({
     type: Date,
     required: [true, "date_expiration is required"],
   },
-  total: {
+  rate: {
     type: Number,
     required: [true, "total is required"],
+  },
+  amount_paid: {
+    type: Number,
+    required: [true, "amount_paid is required"],
+  },
+  residue: {
+    type: Number,
+    required: [true, "residue is required"],
+  },
+  status_paid: {
+    type: String,
+    required: [true, "status_paid is required"],
+  },
+  hours_turn: {
+    type: String,
+  },
+  turn_detail: {
+    type: String,
   },
 });
 

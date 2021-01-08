@@ -14,6 +14,10 @@ router.get(
   "/find_by_dni/:dni",
   handleCatchPromise(customerController.validateShiftByDNI)
 );
+router.post(
+  "/find_property",
+  handleCatchPromise(customerController.findByItems)
+);
 router.post("", handleCatchPromise(customerController.create));
 router.put("/:id", handleCatchPromise(customerController.update));
 router.put(

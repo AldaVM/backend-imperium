@@ -77,7 +77,15 @@ const customerSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "voucher",
       autopopulate: {
-        select: ["paid", "date_init", "date_expiration", "total"],
+        select: [
+          "paid",
+          "date_init",
+          "date_expiration",
+          "rate",
+          "amount_paid",
+          "residue",
+          "status_paid",
+        ],
         maxDepth: 1,
       },
     },
@@ -90,6 +98,9 @@ const customerSchema = new Schema({
     type: String,
   },
   type_modality: {
+    type: String,
+  },
+  status_paid: {
     type: String,
   },
 });
