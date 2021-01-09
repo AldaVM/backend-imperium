@@ -12,31 +12,58 @@ class CustomerServices extends BaseService {
     this.deleteCustomer = this.deleteCustomer.bind(this);
     this.deleteTimetable = this.deleteTimetable.bind(this);
     this.addVoucher = this.addVoucher.bind(this);
+    this.validatePendingVouchers = this.validatePendingVouchers.bind(this);
   }
 
-  async addVoucher(idCustomer: string, idVoucher: string) {
+  validatePendingVouchers(vouchers: any, status_last_voucher: string) {
+    let pendings = [];
+
+    if (vouchers.length > 0) {
+      pendings = vouchers.filter(
+        (voucher: any) => voucher.status_paid == "pending"
+      );
+    }
+
+    return {
+      isPendings: pendings.length > 1,
+      count:
+        status_last_voucher == "pending"
+          ? pendings.length + 1
+          : pendings.length,
+    };
+  }
+
+  async addVoucher(idCustomer: string, newVoucher: any) {
     try {
       const customer: any = await this._customerRepository.findById(idCustomer);
 
-      customer.vouchers.push(idVoucher);
+      customer.vouchers.push(newVoucher._id);
 
-      const currentCustomer = await this._customerRepository.update(
-        idCustomer,
-        customer
+      const result = this.validatePendingVouchers(
+        customer.vouchers,
+        newVoucher.status_paid
       );
+      const status_paid = result.isPendings
+        ? `pagos pendientes ${result.count}`
+        : "sin pagos pendientes";
+
+      await this._customerRepository.update(idCustomer, {
+        vouchers: customer.vouchers,
+        status_paid: status_paid,
+      });
 
       return {
         ok: true,
         status: 200,
         message: "Nuevo voucher registrado",
-        data: currentCustomer,
+        status_paid,
       };
     } catch (error) {
       return {
         ok: false,
         status: 500,
         message: "Error",
-        error,
+        error: error.message,
       };
     }
   }
