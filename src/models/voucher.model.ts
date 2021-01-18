@@ -53,6 +53,9 @@ const voucherSchema = new Schema({
   turn_detail: {
     type: String,
   },
+  type_modality: {
+    type: String,
+  },
 });
 
 voucherSchema.plugin(require("mongoose-autopopulate"));
