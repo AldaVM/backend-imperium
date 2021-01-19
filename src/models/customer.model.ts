@@ -86,6 +86,7 @@ const customerSchema = new Schema({
           "residue",
           "status_paid",
           "turn_detail",
+          "type_modality",
         ],
         maxDepth: 1,
       },

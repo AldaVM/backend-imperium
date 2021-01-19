@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("", handleCatchPromise(voucherController.find));
 router.post("", handleCatchPromise(voucherController.registerVoucher));
+router.put("/:id", handleCatchPromise(voucherController.update));
 
 export default router;
