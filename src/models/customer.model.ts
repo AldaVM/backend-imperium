@@ -87,6 +87,7 @@ const customerSchema = new Schema({
           "status_paid",
           "turn_detail",
           "type_modality",
+          "hours_turn",
         ],
         maxDepth: 1,
       },
