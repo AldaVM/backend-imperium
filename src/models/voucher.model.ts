@@ -18,7 +18,7 @@ const voucherSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "customer",
     autopopulate: {
-      select: ["dni", "names", "surnames", "email", "type_modality"],
+      select: ["dni", "names", "surnames"],
       maxDepth: 1,
     },
     required: [true, "customer is required"],

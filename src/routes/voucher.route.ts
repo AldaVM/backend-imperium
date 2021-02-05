@@ -16,4 +16,8 @@ router.delete(
   [authMidlleware, roleMiddleware],
   handleCatchPromise(voucherController.delete)
 );
+router.post(
+  "/find_property",
+  handleCatchPromise(voucherController.findByItemsPagination)
+);
 export default router;

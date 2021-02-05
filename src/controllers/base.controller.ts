@@ -12,6 +12,7 @@ class BaseController {
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
+    this.findByItemsPagination = this.findByItemsPagination.bind(this);
   }
 
   async findById(req: Request, res: Response) {
@@ -31,6 +32,18 @@ class BaseController {
     const records = await this._service.find(size, page);
 
     res.status(records.status).json(records);
+  }
+
+  async findByItemsPagination(req: Request, res: Response) {
+    const { pageSize, pageNum } = req.query;
+    let size = pageSize ? +pageSize : 30,
+      page = pageNum ? +pageNum : 1;
+
+    const { items } = req.body;
+
+    const record = await this._service.findByItemsPagination(items, size, page);
+
+    res.status(record.status).json(record);
   }
 
   async findByItems(req: Request, res: Response) {
