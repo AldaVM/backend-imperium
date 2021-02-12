@@ -2,7 +2,7 @@ import { BaseService } from "./base.service";
 import { voucherRepository } from "../repositories";
 import { VoucherRepository } from "../repositories/voucher.repository";
 import { customerService } from "../services";
-
+import createNewPDF from "./generate-pdf.service";
 class VoucherServices extends BaseService {
   private _voucherRepository: VoucherRepository;
 
@@ -11,6 +11,39 @@ class VoucherServices extends BaseService {
     this._voucherRepository = voucherRepository;
     this.registerVoucher = this.registerVoucher.bind(this);
     this.calculatePaid = this.calculatePaid.bind(this);
+    this.genereteVocuherPDF = this.genereteVocuherPDF.bind(this);
+  }
+
+  async genereteVocuherPDF(idVoucher: string) {
+    try {
+      const voucher = await this._voucherRepository.findById(idVoucher);
+      await createNewPDF(
+        Object.assign(
+          {
+            customer: {
+              names: "Usuario",
+              surnames: "Usuario",
+              dni: "12345678",
+            },
+          },
+          voucher._doc
+        )
+      );
+
+      return {
+        ok: true,
+        status: 200,
+        message: `Gernando pdf del voucher ${idVoucher}`,
+        data: voucher,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 500,
+        message: "Error",
+        error,
+      };
+    }
   }
 
   calculatePaid(entity: any) {
