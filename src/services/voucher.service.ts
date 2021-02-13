@@ -1,8 +1,8 @@
 import { BaseService } from "./base.service";
 import { voucherRepository } from "../repositories";
 import { VoucherRepository } from "../repositories/voucher.repository";
-import { customerService } from "../services";
-import createNewPDF from "./generate-pdf.service";
+import { customerService, createNewPDF } from "../services";
+import { createSchemaPDFVoucher } from "../helpers";
 class VoucherServices extends BaseService {
   private _voucherRepository: VoucherRepository;
 
@@ -17,18 +17,9 @@ class VoucherServices extends BaseService {
   async genereteVocuherPDF(idVoucher: string) {
     try {
       const voucher = await this._voucherRepository.findById(idVoucher);
-      await createNewPDF(
-        Object.assign(
-          {
-            customer: {
-              names: "Usuario",
-              surnames: "Usuario",
-              dni: "12345678",
-            },
-          },
-          voucher._doc
-        )
-      );
+      const schemaVoucher = createSchemaPDFVoucher(voucher._doc);
+      console.log(schemaVoucher);
+      await createNewPDF(schemaVoucher, idVoucher);
 
       return {
         ok: true,

@@ -7,26 +7,8 @@ function addRow(name: string, info: string, table: any) {
   tr.cell(info, { textAlign: "right" });
 }
 
-async function createNewPDF(
-  voucherInfo = {
-    _id: "4545454587ddsds",
-    customer: {
-      names: "Usuario de prueba",
-      surnames: "Usuario de prueba",
-      dni: "12345678",
-    },
-    rate: 0,
-    amount_paid: 0,
-    date_init: "2021-01-04T00:00:00.000Z",
-    date_expiration: "2021-02-04T00:00:00.000Z",
-    turn_detail: "INTERDIARIO",
-    type_modality: "MENSUAL",
-    residue: 0,
-  }
-) {
+async function createNewPDF(schemaData: any, filename: string) {
   try {
-    console.log(voucherInfo);
-
     const doc = new pdf.Document({
       font: require("pdfjs/font/Helvetica"),
       padding: 20,
@@ -56,23 +38,11 @@ async function createNewPDF(
     tr.cell("Info");
     tr.cell("#", { textAlign: "right" });
 
-    addRow("Número RUC:", "20602696660", table);
-    addRow("Razón Social:", "Imperium Cross SAC", table);
-    addRow(
-      "Nombre del Cliente:",
-      `${voucherInfo.customer.names} ${voucherInfo.customer.surnames}`,
-      table
-    );
-    addRow("DNI del Cliente:", `${voucherInfo.customer.dni}`, table);
-    addRow("Turno:", `${voucherInfo.turn_detail}`, table);
-    addRow("Modalidad:", `${voucherInfo.type_modality}`, table);
-    addRow("Inicio de Inscripción:", `${voucherInfo.date_init}`, table);
-    addRow("Fin de Expiración:", `${voucherInfo.date_expiration}`, table);
-    addRow("Monto a pagar:", `${voucherInfo.rate}`, table);
-    addRow("Monto pagado:", `${voucherInfo.amount_paid}`, table);
-    addRow("Monto pendiente:", `${voucherInfo.residue}`, table);
+    for (const schema of schemaData) {
+      addRow(schema.title, schema.value, table);
+    }
 
-    doc.pipe(fs.createWriteStream(`${voucherInfo._id}.pdf`));
+    doc.pipe(fs.createWriteStream(`${filename}.pdf`));
 
     await doc.end();
   } catch (error) {
@@ -80,4 +50,4 @@ async function createNewPDF(
   }
 }
 
-export default createNewPDF;
+export { createNewPDF };

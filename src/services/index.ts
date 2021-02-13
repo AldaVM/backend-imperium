@@ -6,6 +6,7 @@ import { authService } from "./auth.service";
 import { rangeHoursService } from "./rangehour.service";
 import { parameterService } from "./parameter.service";
 import { voucherService } from "./voucher.service";
+import { createNewPDF } from "./generate-pdf.service";
 
 export {
   helpService,
@@ -16,4 +17,5 @@ export {
   rangeHoursService,
   parameterService,
   voucherService,
+  createNewPDF,
 };

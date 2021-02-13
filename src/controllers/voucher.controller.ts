@@ -3,7 +3,6 @@ import { voucherService } from "../services";
 import { VoucherServices } from "services/voucher.service";
 import { Response, Request } from "express";
 import fs from "fs";
-import path from "path";
 
 class VoucherController extends BaseController {
   private _voucherService: VoucherServices;
@@ -26,17 +25,10 @@ class VoucherController extends BaseController {
   async genereteVocuherPDF(req: Request, res: Response) {
     try {
       const { id } = req.params;
-
-      const voucher = await this._voucherService.genereteVocuherPDF(id);
-      const file = `${id}.pdf`;
-      const filename = path.basename(file);
-
-      res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", "attachment; filename=" + filename);
-
-      const filestream = fs.createReadStream(file);
-      filestream.pipe(res.status(voucher.status).json(voucher));
-      fs.unlinkSync(filename);
+      await this._voucherService.genereteVocuherPDF(id);
+      const stream = fs.createReadStream(`${id}.pdf`);
+      stream.pipe(res);
+      fs.unlinkSync(`${id}.pdf`);
     } catch (error) {
       res.json(500).json({
         ok: false,
