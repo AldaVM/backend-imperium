@@ -13,7 +13,8 @@ class CustomerRepository extends BaseRepository {
     this.deleteTimetable = this.deleteTimetable.bind(this);
   }
 
-  async create(entity: object) {
+  async create(entity: any) {
+
     const customer = new this._customerModel(entity);
     customer.create_at = customer._id.getTimestamp();
 

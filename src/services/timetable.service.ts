@@ -86,7 +86,7 @@ class TimetableService extends BaseService {
               : [] || []
             ).concat([timetable._id]),
             class_shift: timetable.class_shift,
-            customers: timetable.customers.length,
+            customer: timetable.customers.length,
           };
           return acu;
         },
