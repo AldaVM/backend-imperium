@@ -18,7 +18,6 @@ class UserRepository extends BaseRepository {
 
   async create(entity: object) {
     const user = new this._userModel(entity);
-    user.createdAt = user._id.getTimestamp();
     return await user.save();
   }
 

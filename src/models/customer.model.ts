@@ -14,6 +14,7 @@ export interface ICustomer extends Document {
   reference?: string;
   image?: string;
   timetable?: [object];
+  company?: number;
   type_timetable?: string;
   type_modality: string;
 }
@@ -62,6 +63,10 @@ const customerSchema = new Schema({
     type: String,
   },
   image: String,
+  company: {
+    type: Number,
+    required: [true, "that company is required"],
+  },
   timetable: [
     {
       type: Schema.Types.ObjectId,

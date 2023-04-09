@@ -31,7 +31,6 @@ class AuthServices {
         name: userFind?.user.name,
         _id: userFind?.user._id,
         email: userFind?.user.email,
-        createdAt: userFind?.user.createdAt,
         role: userFind?.user.role,
       };
 

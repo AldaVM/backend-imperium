@@ -18,7 +18,7 @@ class VoucherServices extends BaseService {
     try {
       const voucher = await this._voucherRepository.findById(idVoucher);
       const schemaVoucher = createSchemaPDFVoucher(voucher._doc);
-      console.log(schemaVoucher);
+  
       await createNewPDF(schemaVoucher, idVoucher);
 
       return {

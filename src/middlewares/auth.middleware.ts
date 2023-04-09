@@ -17,7 +17,7 @@ const authMidlleware = async (
       throw error;
     }
     verify(token, config.JWT_SECRET, (err, decoded: any) => {
-      console.log(token)
+ 
       if (err) {
         const error: IError = new Error();
         error.status = 401;

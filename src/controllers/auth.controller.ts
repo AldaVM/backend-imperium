@@ -13,6 +13,7 @@ class AuthController {
   async signin(req: Request, res: Response) {
     const { body } = req;
     const resp = await this._authService.signin(body);
+
     return res.status(resp.status).json(resp);
   }
 

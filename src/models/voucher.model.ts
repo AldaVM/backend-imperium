@@ -5,6 +5,7 @@ export interface IVoucher extends Document {
   customer: Schema.Types.ObjectId;
   date_init: Date;
   date_expiration: Date;
+  company?: number;
   total: number;
 }
 
@@ -13,6 +14,10 @@ const voucherSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "paid",
     autopopulate: true,
+  },
+  company: {
+    type: Number,
+    required: [true, "that company is required"],
   },
   customer: {
     type: Schema.Types.ObjectId,

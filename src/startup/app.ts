@@ -8,8 +8,8 @@ const app = express();
 
 //Settings:
 app.set("port", process.env.PORT || 8000);
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cors());
 
 //Settings entorn development:

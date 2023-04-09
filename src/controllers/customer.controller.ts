@@ -82,7 +82,7 @@ class CustomerController extends BaseController {
     const clients = data?.data?.records.reduce(
       (acu: any, currentValue: any) => {
         if (currentValue?.timetable) {
-          console.log(currentValue?.timetable);
+  
           acu.push({
             created: format(currentValue?.create_at, "dd/MM/yyyy"),
             ...getTimetable(currentValue?.timetable),
@@ -108,7 +108,7 @@ class CustomerController extends BaseController {
       { header: "ID", key: "_id" },
       { header: "Nombres", key: "names" },
       { header: "Apellidos", key: "surnames" },
-      { header: "DNI", key: "dni" },
+      { header: "Sede", key: "company"},
       { header: "DNI", key: "dni" },
       { header: "Fecha-Creación", key: "created" },
       { header: "Dirección", key: "address" },
